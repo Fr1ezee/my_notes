@@ -3,11 +3,10 @@ from telebot import types
 import sqlite3
 import webbrowser
 
-bot = telebot.TeleBot('8564059620:AAEKfu0N_5U0UZB3paKkrAc7N7j-BQjuqGw')
+bot = telebot.TeleBot('')
 
-# ------------------------------------------------------------
+
 # 1. Обработчик команды /start — регистрация пользователя через диалог
-# ------------------------------------------------------------
 name = None  # глобальная переменная для временного хранения имени
 
 @bot.message_handler(commands=['start'])
@@ -75,10 +74,8 @@ def callback(call):
 
         bot.send_message(call.message.chat.id, info)
 
-
-# ------------------------------------------------------------
 # 2. Обработчик команды /phot — отправка фото с обычной клавиатурой (ReplyKeyboardMarkup)
-# ------------------------------------------------------------
+
 @bot.message_handler(commands=['phot'])
 def start(message):
     # Создаём обычную клавиатуру (прилипает к полю ввода)
@@ -106,9 +103,8 @@ def on_click(message):
     # Изменить текст — не реализовано, можно добавить
 
 
-# ------------------------------------------------------------
+
 # 3. Обработчик входящих фото — показывает инлайн-кнопки под фото
-# ------------------------------------------------------------
 @bot.message_handler(content_types=['photo'])  # content_types=['photo'] ловит только фото
 def get_photo(message):
     # Создаём инлайн-клавиатуру (кнопки под сообщением)
@@ -119,7 +115,7 @@ def get_photo(message):
     btn3 = types.InlineKeyboardButton('Изменить текст', callback_data='edit')
     markup.row(btn2, btn3)
 
-    # reply_to — ответ на сообщение с фото
+    # reply_to  ответ на сообщение с фото
     bot.reply_to(message, 'Какое красивое фото', reply_markup=markup)
 
 
@@ -136,17 +132,16 @@ def callback_message(callback):
         bot.edit_message_text('Edit text', callback.message.chat.id, callback.message.message_id)
 
 
-# ------------------------------------------------------------
+
 # 4. Открытие сайта в браузере по команде /site (в оригинале написано 'site, website' — так не работает)
-# ------------------------------------------------------------
+
 @bot.message_handler(commands=['site'])   # команда должна быть одна. Если нужно две, пиши ['site', 'website']
 def site(message):
     webbrowser.open('https://www.google.com')
 
 
-# ------------------------------------------------------------
+
 # 5. Обычный обработчик команды /help
-# ------------------------------------------------------------
 @bot.message_handler(commands=['help'])
 def main(message):
     bot.send_message(message.chat.id, 'help message')
