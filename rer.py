@@ -119,9 +119,7 @@ def get_photo(message):
     bot.reply_to(message, 'Какое красивое фото', reply_markup=markup)
 
 
-# ВНИМАНИЕ: В коде два обработчика callback_query_handler с одинаковым условием.
-# Последний перезапишет первый. Чтобы работали оба, нужно объединить логику.
-# Здесь я показываю второй обработчик, но в реальном проекте их лучше слить в один.
+
 @bot.callback_query_handler(func=lambda callback: True)
 def callback_message(callback):
     if callback.data == 'delete':
@@ -132,8 +130,6 @@ def callback_message(callback):
         bot.edit_message_text('Edit text', callback.message.chat.id, callback.message.message_id)
 
 
-
-# 4. Открытие сайта в браузере по команде /site (в оригинале написано 'site, website' — так не работает)
 
 @bot.message_handler(commands=['site'])   # команда должна быть одна. Если нужно две, пиши ['site', 'website']
 def site(message):
