@@ -15,8 +15,6 @@ def start(message):
     conn = sqlite3.connect('sevent.db')
     cur = conn.cursor()
 
-    # Создаём таблицу users, если её нет
-    # ВНИМАНИЕ: в оригинале ошибка в синтаксисе SQLite.
     # Правильно: id INTEGER PRIMARY KEY AUTOINCREMENT
     cur.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(50), pass VARCHAR(50))')
     conn.commit()
@@ -25,7 +23,7 @@ def start(message):
 
     bot.send_message(message.chat.id, 'Привет, сейчас тебя зарегистрируем! Введите ваше имя')
 
-    # Регистрируем следующий шаг — после ответа пользователя вызовется user_name
+    # Регистрируем следующий шаг после ответа пользователя вызовется user_name
     bot.register_next_step_handler(message, user_name)
 
 
@@ -131,7 +129,7 @@ def callback_message(callback):
 
 
 
-@bot.message_handler(commands=['site'])   # команда должна быть одна. Если нужно две, пиши ['site', 'website']
+@bot.message_handler(commands=['site'])   # команда должна быть одна. Если нужно две  ['site', 'website']
 def site(message):
     webbrowser.open('https://www.google.com')
 
